@@ -2,12 +2,20 @@ const path = require('path')
 const cors = require('cors')
 const fs = require('fs')
 const express = require('express')
+const http = require("http");
+const socketIo = require("socket.io");
 
 const routes = require('./routes')
 
 const app = express()
+const server = http.createServer(app);
 
-app.use(cors())
+// app.use(
+//   cors({
+//     origin: "http://localhost:5200/",
+//     credentials: true,
+//   })
+// );
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -38,10 +46,19 @@ router.get('*', (req, res) => {
 })
 app.use('/', router)
 
+io.on("connection", (socket) => {
+  console.log("A client connected");
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 
+const port = process.env.PORT || 5200;
+server.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
+});
 
-
-const server = app.listen(5200, () => {
-    let port = server.address().port
-    console.log(`server on port: ${port}`)
-})
+// const server = app.listen(5200, () => {
+//     let port = server.address().port
+//     console.log(`server on port: ${port}`)
+// })
