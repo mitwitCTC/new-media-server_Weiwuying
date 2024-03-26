@@ -14,10 +14,10 @@ const getSetting = path => {
     return readFile(path)
 }
 getSetting(SETTING_PATH)
-const sendSetting = (data,ip) => {
+const sendSetting = (data,ip='127.0.0.1') => {
     let { carousel, carousel2, ...other } = data
     if (carousel.length) other = { ...data }
-    fetch(`http://${ip}/set`, 'POST', other)
+    fetch(`http://${ip}:5200/set`, 'POST', other)
 }
 
 module.exports = {
