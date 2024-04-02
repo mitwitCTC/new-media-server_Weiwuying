@@ -17,7 +17,7 @@ getSetting(SETTING_PATH)
 const sendSetting = (data,ip='127.0.0.1') => {
     let { carousel, carousel2, ...other } = data
     if (carousel.length) other = { ...data }
-    fetch(`http://${ip}:5200/set`, 'POST', other)
+    fetch(`http://127.0.0.1/set`, 'POST', other)
 }
 
 module.exports = {
