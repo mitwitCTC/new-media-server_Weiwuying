@@ -4,7 +4,7 @@ const SETTING_PATH = getPath(__dirname, '../media_setting.txt')
 
 const IMAGE_PATH = getDir('../MEDIA_IMG/')
 
-const IMG_URL = `http://127.0.0.1:5200/api/img/`
+const IMG_URL = `http://${getIp()}:5200/api/img/`
 
 const getSetting = path => {
     if (!checkFile(path)) {
@@ -14,10 +14,10 @@ const getSetting = path => {
     return readFile(path)
 }
 getSetting(SETTING_PATH)
-const sendSetting = (data,ip='127.0.0.1') => {
+const sendSetting = (data,ip) => {
     let { carousel, carousel2, ...other } = data
     if (carousel.length) other = { ...data }
-    fetch(`http://127.0.0.1/set`, 'POST', other)
+    fetch(`http://${ip}/set`, 'POST', other)
 }
 
 module.exports = {
